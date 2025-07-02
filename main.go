@@ -18,7 +18,7 @@ func main() {
 	}()
 	wg.Add(1)
 	go func ()  {
-		cube(code, mode)
+		square(code, mode)
 		defer wg.Done()
 		close(mode)
 	}()
@@ -37,7 +37,7 @@ func arr(code chan int) {
     }
 }
 
-func cube(code, mode chan int) {
+func square(code, mode chan int) {
 	for range 10 {
 		x := <-code
 		mode <- x*x 
