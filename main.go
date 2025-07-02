@@ -13,23 +13,19 @@ func main() {
 	wg.Add(1)
 	go func ()  {
 		arr(code)
-		wg.Done()
+		defer wg.Done()
+		close(code)
 	}()
 	wg.Add(1)
 	go func ()  {
 		cube(code, mode)
-		wg.Done()
-	}()
-	go func ()  {
-		wg.Wait()
-		close(code)
+		defer wg.Done()
 		close(mode)
 	}()
-	for range 10 {
-		num := <- mode
-		fmt.Println(num) 
-	}
-
+	for num := range mode {
+        fmt.Println(num)
+    }
+	wg.Wait()
 }
 
 
